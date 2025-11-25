@@ -30,5 +30,34 @@ def open_file():
         input_file.close()
     window.title(f"Codingal's Text Editor - {filepath}")    
 
-    # Function to save a file
-    
+# Function to save a file
+def save_file():
+    # save the current file as a new file
+    filepath = asksaveasfilename(
+        defaultextension="txt",
+        filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")],
+    )
+    if not filepath:
+        return
+    with open(filepath, "w") as output_file: 
+        # read the edited content and update in the output file 
+        text = txt_edit.get(1.0, END)
+        output_file.write(text)
+
+    window.totle(f"Codingal's Text Editor - {filepath}")
+
+# add widgets in the application
+txt_edit = Text(window)
+fr_buttons = Frame(window, relief=RAISED, bd=2)
+btn_open = Button(fr_buttons, text = "Open", command= open_file)
+
+btn_save = Button(fr_buttons, text = "Save As...", command= save_file)
+
+btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+btn_save.grid(row=1, column=0, sticky="ew", padx=5)
+
+fr_buttons.grid(row=0, column=0, sticky="ns")
+txt_edit.grid(row=0, column=1, sticky="nsew")
+
+# start the GUI event loop
+window.mainloop() 
